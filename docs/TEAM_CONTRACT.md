@@ -1,22 +1,23 @@
-# Shared Models and Contracts — Proposal
+# Shared Models and Contracts
 
-**Status: proposed; ask all seven members to review before parallel implementation.**
+**Status: confirmed choices supplied by the team (2026-11-25).**
 
-This file starts the team discussion. The public types in `src/QuizApplication/Models.fs` are a first draft, not a final contract.
+These types and rules are the shared contract for all seven work areas. Coordinate any later changes with the team because other modules depend on them.
 
-## Proposed types
+## Agreed decisions
 
-- `QuestionKind` distinguishes multiple-choice questions (options plus the expected answer) from written questions (an expected answer for the initial simple evaluator).
-- `Question` contains an integer ID, prompt text, kind, points, and category.
-- `UserAnswer` distinguishes a selected option from written text.
-- `QuizState` keeps the question list, current index, and answers keyed by question ID.
+1. **Written answers:** grade by exact text equality. Case and whitespace matter; do not trim or normalize the answer before comparing it with the expected answer.
+2. **Multiple-choice answers:** identify each option by an integer ID. Store the selected option ID, not its display text. Option IDs must be unique within a question, and the correct option ID must exist in that question's options.
+3. **Navigation:** Next and Previous stop at the last and first question; they never wrap. At a boundary, the current question stays selected. An empty quiz has no current question, and navigation leaves it empty.
+4. **Categories:** optional. A question may have no category.
+
+## Shared types
+
+- `AnswerOption` has an integer `Id` and display `Text`.
+- `QuestionKind` is either `MultipleChoice` (options and correct option ID) or `Written` (expected answer text).
+- `Question` contains its ID, prompt, kind, points, and optional category.
+- `UserAnswer` stores a selected option ID or written text.
+- `QuizState` holds the questions, current index, and answers keyed by question ID.
 - `QuizResult` contains earned and possible points plus correct, incorrect, and unanswered counts.
 
-## Questions the team should settle
-
-1. Should written answers be graded by exact match, manually, or with a simple rule agreed by the instructor?
-2. Should answer payloads remain strings, or should MCQ answers use option IDs?
-3. Should navigation stop at the first/last question or wrap around?
-4. Is a category required for every question?
-
-Once everyone agrees, update this document and `Models.fs` together in one reviewed change. Keep `Models.fs` first in F# compile order; keep `Program.fs` last.
+The implementation is in `src/QuizApplication/Models.fs`. Keep this file first in F# compile order; modules that use these types come after it, and `Program.fs` stays last.

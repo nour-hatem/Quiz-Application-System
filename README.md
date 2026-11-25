@@ -18,7 +18,7 @@ dotnet run --project .\src\QuizApplication\QuizApplication.fsproj
 
 ## Team workflow
 
-The shared model contract is currently a proposal in `docs/TEAM_CONTRACT.md`. Review and agree on it before members build modules against it. After the contract is accepted, each member should use a feature branch and open a pull request to `main`.
+The shared model contract is recorded in `docs/TEAM_CONTRACT.md`. All modules should follow it. Each member should use a feature branch and open a pull request to `main`.
 
 F# source files must be listed in dependency order in the `.fsproj` file. Shared types come first; modules that use them come later; `Program.fs` stays last.
 
