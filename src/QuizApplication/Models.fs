@@ -1,7 +1,13 @@
 namespace QuizApplication
 
+type AnswerOption =
+    {
+        Id: int
+        Text: string
+    }
+
 type QuestionKind =
-    | MultipleChoice of options: string list * correctAnswer: string
+    | MultipleChoice of options: AnswerOption list * correctOptionId: int
     | Written of expectedAnswer: string
 
 type Question =
@@ -10,11 +16,11 @@ type Question =
         Text: string
         Kind: QuestionKind
         Points: int
-        Category: string
+        Category: string option
     }
 
 type UserAnswer =
-    | SelectedOption of string
+    | SelectedOption of optionId: int
     | WrittenText of string
 
 type QuizState =
