@@ -28,7 +28,7 @@ module Scoring =
 
         state.Questions
         |> List.fold
-            (fun result question ->
+            (fun (result: QuizResult) (question: Question) ->
                 match Map.tryFind question.Id state.Answers with
                 | None ->
                     { result with UnansweredCount = result.UnansweredCount + 1 }
