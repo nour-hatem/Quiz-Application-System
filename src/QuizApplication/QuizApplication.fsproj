@@ -9,6 +9,7 @@
   <ItemGroup>
     <Compile Include="Models.fs" />
     <Compile Include="QuestionBank.fs" />
+    <Compile Include="Scoring.fs" />
     <Compile Include="UI\MainForm.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
